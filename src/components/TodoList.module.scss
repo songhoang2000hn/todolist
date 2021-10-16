@@ -1,0 +1,48 @@
+:root{
+    --primary-color: #16A3B7;
+    --gray-color: #bdc3c7;
+    --pink-color: #DC3445;
+}
+p{
+    margin: 0;
+}
+.tr_custom{
+    padding: 10px;
+    border: 1px solid var(--gray-color);
+    margin-bottom: 10px;
+    border-radius: 4px;
+}
+.flex_center{
+    display: flex;
+    align-items: center;
+}
+.tagTitle{
+    flex: 1;
+    font-size: 16px;
+    font-weight: 500;
+}
+.btnContainer{
+    width: 25px;
+    height: auto;
+    margin-left: 10px;
+    cursor: pointer;
+}
+.iconEdit{
+    i{
+        color: #FFC834;
+    }
+}
+.iconDelete{
+    i{
+        color: var(--pink-color);
+    }
+}
+.checkbox{
+    margin-right: 10px !important;
+    padding: 5px !important;
+}
+.date{
+    font-size: 12px;
+    font-weight: normal;
+    color: var(--gray-color);
+}
