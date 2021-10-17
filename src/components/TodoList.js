@@ -16,7 +16,7 @@ function TodoList(props) {
       key={props.key}
     >
       <input type="checkbox" className={styles.checkbox} {...checkboxProps} />
-      <div style={{flex: 1}}>
+      <div style={{flex: 1}} onClick={props.clickChangeValue}>
         <p
           className={[styles.tagTitle].join(" ")}
           style={props.status === true ? active : null}

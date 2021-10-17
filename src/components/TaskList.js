@@ -116,6 +116,16 @@ function TaskList() {
     localStorage.setItem("tasks", JSON.stringify(cloneData));
   };
 
+  const handelClickChangeTaskInfo = (item) => {
+    let index = tasks.indexOf(item);
+    let cloneData = [...tasks];
+    let cloneItem = { ...cloneData[index] };
+    cloneItem["status"] = !cloneItem["status"];
+    cloneData[index] = cloneItem;
+    setTasks(cloneData);
+    localStorage.setItem("tasks", JSON.stringify(cloneData));
+  }
+
   return (
     <div className={styles.container}>
       <h2>TODO LIST</h2>
@@ -150,6 +160,7 @@ function TaskList() {
                   name={item.name}
                   date={item.date}
                   status={item.status}
+                  clickChangeValue={() => handelClickChangeTaskInfo(item)}
                   checkboxProps={{
                     value: item.status,
                     checked: item.status,
@@ -163,6 +174,7 @@ function TaskList() {
                   name={item.name}
                   date={item.date}
                   status={item.status}
+                  clickChangeValue={() => handelClickChangeTaskInfo(item)}
                   checkboxProps={{
                     value: item.status,
                     checked: item.status,
@@ -186,19 +198,19 @@ function TaskList() {
       <div
         className={[styles.flex_center, styles.marginBottom_custom].join(" ")}
       >
-        <p
+        <button
           className={[styles.button, styles.list_button].join(" ")}
           onClick={() => deleteDoneTask()}
         >
           Delete done tasks
-        </p>
+        </button>
         <div style={{ width: "10px" }}></div>
-        <p
+        <button
           className={[styles.button, styles.list_button].join(" ")}
           onClick={() => deleteAll()}
         >
           Delete all task
-        </p>
+        </button>
       </div>
     </div>
   );

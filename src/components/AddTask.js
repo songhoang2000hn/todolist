@@ -9,7 +9,7 @@ function AddTask(props) {
   };
   return (
     <>
-      <div className={styles.container}>
+      <form className={styles.container} onSubmit={props.handelAdd}>
         <input
           className={styles.input}
           type="text"
@@ -17,34 +17,34 @@ function AddTask(props) {
           placeholder="Enter here..."
           {...inputProps}
         />
-        <p className={styles.button} onClick={props.handelAdd}>
+        <button className={styles.button} type="submit">
           Add New
-        </p>
-      </div>
+        </button>
+      </form>
       <div
         className={[styles.flex_center, styles.marginBottom_custom].join(" ")}
       >
-        <p
+        <button
           className={[styles.button, styles.list_button].join(" ")}
           style={props.filter === "all" ? active : null}
           onClick={props.handelFilterAll}
         >
           All - {props.all} tasks
-        </p>
-        <p
+        </button>
+        <button
           className={[styles.button, styles.list_button].join(" ")}
           style={props.filter === "done" ? active : null}
           onClick={props.handelFilterDone}
         >
           Done - {props.done} tasks
-        </p>
-        <p
+        </button>
+        <button
           className={[styles.button, styles.list_button].join(" ")}
           style={props.filter === "todo" ? active : null}
           onClick={props.handelFilterTodo}
         >
           Todo - {props.todo} tasks
-        </p>
+        </button>
       </div>
     </>
   );
