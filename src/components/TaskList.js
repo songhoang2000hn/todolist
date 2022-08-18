@@ -28,7 +28,7 @@ function TaskList() {
       setTodoQty(0);
       setDoneQty(0);
     }
-    tasks.map((item, index) => {
+    tasks.forEach((item) => {
       if (item.status === true) {
         done += 1;
         setDoneQty(done);
