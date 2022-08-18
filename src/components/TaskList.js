@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import TodoList from "./TodoList";
 import AddTask from "./AddTask.js";
 import { isOnlySpaceOrEmpty } from "../utilities/utils";
@@ -12,10 +12,6 @@ function TaskList() {
   const [allQty, setAllQty] = useState(0);
   const [doneQty, setDoneQty] = useState(0);
   const [todoQty, setTodoQty] = useState(0);
-
-  // localStorage.clear()
-  // localStorage.setItem("tasks", JSON.stringify(tasks));
-  // localStorage.removeItem("tasks");
 
   useEffect(() => {
     let localTask = JSON.parse(localStorage.getItem("tasks"));
@@ -53,38 +49,45 @@ function TaskList() {
     setInputValue(e.target.value);
   };
 
-  const addNewTodo = () => {
-    const d = new Date();
-    const today = d.getDate();
-    const month = d.getMonth() + 1;
-    const year = d.getFullYear();
-    const time = `${today}/${month}/${year}`;
-    if (isOnlySpaceOrEmpty(inputValue)) {
-      let newTask = [...tasks];
-      let todo = {};
-      todo.name = inputValue;
-      todo.date = time;
-      todo.status = false;
-      newTask.unshift(todo);
-      setTasks(newTask);
-      localStorage.setItem("tasks", JSON.stringify(newTask));
-      setInputValue("");
-    } else {
-      setInputValue("");
-    }
-  };
+  const addNewTodo = useCallback(
+    (e) => {
+      e.preventDefault();
+      const d = new Date();
+      const today = d.getDate();
+      const month = d.getMonth() + 1;
+      const year = d.getFullYear();
+      const time = `${today}/${month}/${year}`;
+      if (isOnlySpaceOrEmpty(inputValue)) {
+        let newTask = [...tasks];
+        let todo = {};
+        todo.name = inputValue;
+        todo.date = time;
+        todo.status = false;
+        newTask.unshift(todo);
+        setTasks(newTask);
+        localStorage.setItem("tasks", JSON.stringify(newTask));
+        setInputValue("");
+      } else {
+        setInputValue("");
+      }
+    },
+    [inputValue, tasks]
+  );
 
-  const deteleTodo = (item) => {
-    let cloneData = [...tasks];
-    let currentItem = tasks.indexOf(item);
-    cloneData.splice(currentItem, 1);
-    setTasks(cloneData);
-    localStorage.setItem("tasks", JSON.stringify(cloneData));
-  };
+  const deteleTodo = useCallback(
+    (item) => {
+      let cloneData = [...tasks];
+      let currentItem = tasks.indexOf(item);
+      cloneData.splice(currentItem, 1);
+      setTasks(cloneData);
+      localStorage.setItem("tasks", JSON.stringify(cloneData));
+    },
+    [tasks]
+  );
 
-  const deleteDoneTask = () => {
+  const deleteDoneTask = useCallback(() => {
     let cloneData = [];
-    tasks.map((item) => {
+    tasks.forEach((item) => {
       if (item.status === false) {
         let cloneItem = item;
         cloneData.push(cloneItem);
@@ -93,7 +96,7 @@ function TaskList() {
     setTasks(cloneData);
     localStorage.setItem("tasks", JSON.stringify(cloneData));
     setDoneQty(0);
-  };
+  }, [tasks]);
 
   const deleteAll = () => {
     setTasks([]);
@@ -124,7 +127,7 @@ function TaskList() {
     cloneData[index] = cloneItem;
     setTasks(cloneData);
     localStorage.setItem("tasks", JSON.stringify(cloneData));
-  }
+  };
 
   return (
     <div className={styles.container}>
